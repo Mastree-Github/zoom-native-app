@@ -7,7 +7,7 @@
  */
 
 import React from 'react';
-import type {Node} from 'react';
+import type { Node } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -15,7 +15,7 @@ import {
   StyleSheet,
   Text,
   useColorScheme,
-  View,
+  View, Button
 } from 'react-native';
 
 import {
@@ -26,7 +26,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const Section = ({children, title}): Node => {
+import initZoom from './native_modules/ZoomModule';
+
+const Section = ({ children, title }): Node => {
   const isDarkMode = useColorScheme() === 'dark';
   return (
     <View style={styles.sectionContainer}>
@@ -52,6 +54,8 @@ const Section = ({children, title}): Node => {
   );
 };
 
+
+
 const App: () => Node = () => {
   const isDarkMode = useColorScheme() === 'dark';
 
@@ -59,6 +63,10 @@ const App: () => Node = () => {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
   };
 
+  const onPress = () => {
+    initZoom();
+  };
+  
   return (
     <SafeAreaView style={backgroundStyle}>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
@@ -71,8 +79,10 @@ const App: () => Node = () => {
             backgroundColor: isDarkMode ? Colors.black : Colors.white,
           }}>
           <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.js</Text> to change this
-            screen and then come back to see your edits.
+            <Button
+              title="Initialize Zoom"
+              onPress={onPress}
+            />
           </Section>
           <Section title="See Your Changes">
             <ReloadInstructions />
@@ -82,7 +92,7 @@ const App: () => Node = () => {
           </Section>
           <Section title="Learn More">
             Read the docs to discover what to do next:
-          </Section>
+           </Section>
           <LearnMoreLinks />
         </View>
       </ScrollView>
@@ -110,3 +120,4 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
